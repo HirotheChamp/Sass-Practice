@@ -1,0 +1,73 @@
+//importing partials
+@import './resets';
+@import './variables';
+
+@function weight($weight-name){
+    @return map-get($font-weights, $weight-name );
+}
+
+// mixin used to define styles
+@mixin flexCenter($direction) {
+       //paragraphs will default flex to a given row
+       display:flex;
+       justify-content: center;
+       align-items: center;
+       flex-direction: $direction;
+}
+
+//can pass boolean with if statement similar to javascript
+@mixin theme($light-theme: true) {
+    @if $light-theme {
+        background: lighten($primary-color, 100%);
+        color: darken($text-color, 100%);
+    }
+}
+
+@mixin mobile{
+    @media (max-width: $mobile) {
+        @content; 
+    }
+}
+
+body {
+    background: $primary-color;
+    color: $text-color;
+   
+}
+
+//sass allows nexting within elements
+.main{
+@include flexCenter(row);
+width: 80% - 40%;
+    
+    margin: 0 auto;
+
+    // ampersand is equivalent to the parent (in this case, & = .main)
+    // #{} -- interpolation used for getting everything before paragraph
+    #{&}_paragraph1{
+        font-weight: weight(bold);
+
+        &:hover{
+            color: pink;
+        }
+    }
+
+    //interpolating and extending so that the paragraphs have the same elements
+    #{&}_paragraph2 {
+        @extend .main_paragraph1;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    @include mobile{
+        flex-direction: column;
+    }
+}
+
+
+.light{
+    @include theme($light-theme: true);
+}
+

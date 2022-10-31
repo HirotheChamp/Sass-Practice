@@ -20,6 +20,7 @@ Practicing using the SASS scripting language.
 ## Technologies Used
 
 *CSS 
+*SASS
 
 
 
